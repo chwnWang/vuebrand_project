@@ -1,23 +1,26 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
-  </div>
+    <div id="app">
+      <router-view></router-view>
+      <FooterGuide/>
+    </div>
+    
 </template>
 
 <script>
+import FooterGuide from './pages/FooterGuide/FooterGuide'
 export default {
-  name: 'App'
+  components:{
+    FooterGuide
+  }
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="stylus" rel="stylesheet/stylus">
+  @import "/assets/fonts/iconfont.css"
+  #app
+    width 100%
+    padding-bottom 50px
+    background: #f5f5f5;
+
+
 </style>
