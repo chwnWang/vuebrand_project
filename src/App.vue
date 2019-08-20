@@ -1,7 +1,7 @@
 <template>
     <div id="app">
       <router-view></router-view>
-      <FooterGuide/>
+      <FooterGuide v-show="$route.meta.FooterGuide"/>
     </div>
     
 </template>
@@ -18,6 +18,7 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus">
   @import "/assets/fonts/iconfont.css"
   #app
+    position relative
     width 100%
     padding-bottom 50px
     background: #f5f5f5;

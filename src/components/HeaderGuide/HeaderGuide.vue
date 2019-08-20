@@ -26,11 +26,16 @@
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 .header
+  position fixed
+  top 0
+  left 0
+  z-index 300
   width 100%
   height 45px
   background-color #fff
   padding 10px
   box-sizing border-box
+  border-bottom 1px solid #cccccc
   .header_text
     height 30px
     float left

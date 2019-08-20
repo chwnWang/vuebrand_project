@@ -5,7 +5,7 @@
         <span class="header_text">
 
         </span>
-        <div class="header_mid">
+        <div class="header_mid" @click="$router.push('/search')">
             <i class="iconfont icon-sousuo"></i>
             <input class="header_input" type="text" placeholder="搜索商品,共2015款好物"/>
         </div>

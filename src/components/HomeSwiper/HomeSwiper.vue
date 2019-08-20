@@ -39,6 +39,7 @@
   .swiper-container
     width 100%
     height 200px
+    margin-top 85px
     .swiper-wrapper
       .swiper-slide
         img

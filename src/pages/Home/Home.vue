@@ -5,12 +5,12 @@
       <span class="header_text" slot="left">
           网易严选
       </span>
-      <div class="header_mid" slot="center">
+      <div class="header_mid" slot="center" @click="$router.push('/search')">
           <i class="iconfont icon-sousuo"></i>
           <input class="header_input" type="text" placeholder="搜索商品,共2015款好物"/>
       </div>
       <div class="header_right" slot="right">
-          <a class="header_button" href="###">登录</a>
+          <a class="header_button" href="###" @click="$router.replace('login')">登录</a>
       </div>
     </Header>
     <!--头部导航-->

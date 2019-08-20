@@ -3,24 +3,26 @@
     <!--头部-->
     <div class="header">
         <span class="header_text">
-            <i class="iconfont icon-zhuye"></i>
+            <i class="iconfont icon-zhuye" @click="$router.replace('/home')"></i>
         </span>
         <div class="header_mid">
             网易严选
         </div>
         <div class="header_right">
-            <i class="iconfont icon-sousuo"></i>
-            <i class="iconfont icon-gouwuche"></i>
+            <i class="iconfont icon-sousuo" @click="$router.push('/search')"></i>
+            <i class="iconfont icon-gouwuche" @click="$router.replace('/shopCar')"></i>
         </div>
     </div>
     <div class="login_content">
       <div class="login_top">
           <img src="./images/cat/c06.png"/>
-          <div class="btn01 login_btn active">
+      
+          <div class="btn01 login_btn" :class="{active:!isClick}" @click="skipLogin(true)">
               <i class="iconfont icon-shouji"></i>
               <span>手机号快速登录</span>
           </div>
-          <div class="btn02 login_btn">
+      
+          <div class="btn02 login_btn" :class="{active:isClick}" @click="skipLogin(false)">
               <i class="iconfont icon-youxiang"></i>
               <span>邮箱账号登录</span>
           </div>
@@ -53,6 +55,22 @@
 
 <script type="text/ecmascript-6">
   export default {
+    data(){
+      return{
+        isClick:"" //默认为true
+      }
+    },
+    methods:{
+      skipLogin(isClick){
+        this.isClick = isClick
+        this.$router.replace({
+          path:'/login',
+          query:{
+            isClick:this.isClick
+          }
+        })
+      }
+    },
   }
 </script>
 
