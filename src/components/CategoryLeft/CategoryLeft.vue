@@ -1,26 +1,32 @@
 <template>
     <div class="category_left" ref="leftList">
         <ul class="left_list">
-            <li class="listItem"><a class="active" href="###">推荐</a></li>
-            <li class="listItem"><a href="###">居家生活</a></li>
-            <li class="listItem"><a href="###">生活用品</a></li>
-            <li class="listItem"><a href="###">美食酒水</a></li>
-            <li class="listItem"><a href="###">推荐</a></li>
-            <li class="listItem"><a href="###">居家生活</a></li>
-            <li class="listItem"><a href="###">生活用品</a></li>
-            <li class="listItem"><a href="###">美食酒水</a></li>
-            <li class="listItem"><a href="###">推荐</a></li>
-            <li class="listItem"><a href="###">居家生活</a></li>
-            <li class="listItem"><a href="###">生活用品</a></li>
-            <li class="listItem"><a href="###">美食酒水</a></li>
+            <li class="listItem"  v-for="(category, index) in categoryData" :key="index" @click="choiceCategory(index)">
+              <a class="" href="###" :class='{active: currIndex===index}'>{{category.name}}</a>
+              </li>
         </ul>
     </div>
 </template>
 
 <script type="text/ecmascript-6">
   import BScroll from 'better-scroll'
+  import { mapState, mapGetters } from 'vuex';
   export default {
+    computed:{
+      ...mapState({
+         currIndex:state=>state.category.currIndex
+      })
+    },
+    props:{
+      categoryData:Array
+    },
+    methods:{
+      choiceCategory(currIndex){
+         this.$store.dispatch('updateIndex',{currIndex});
+      }
+    },
     mounted(){
+      console.log(this.categoryData)
       this.$nextTick(()=>{
         new BScroll(this.$refs.leftList,{
             scrollX: false,
@@ -35,7 +41,7 @@
 <style lang="stylus" rel="stylesheet/stylus" scoped>
     .category_left
         width 25%
-        height 500px
+        height 550px
         overflow hidden
         .left_list
           width 100%

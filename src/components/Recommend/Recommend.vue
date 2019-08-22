@@ -24,20 +24,10 @@
             </div>
         </div>
         <div class="recommend_bot">
-            <div class="recommend_bot_item">
-            <img class="itemImg" src="./images/demo/008.png" alt="">
-            <p class="recommend_bot_text">无损风味 超即溶精品咖啡（...</p>
-                <p class="recommend_bot_price">2件8.5折</p>
-            </div>
-            <div class="recommend_bot_item">
-                <img class="itemImg" src="./images/demo/008.png" alt="">
-                <p class="recommend_bot_text">无损风味 超即溶精品咖啡（...</p>
-                <p class="recommend_bot_price">2件8.5折</p>
-            </div>
-            <div class="recommend_bot_item">
-                <img class="itemImg" src="./images/demo/008.png" alt="">
-                <p class="recommend_bot_text">无损风味 超即溶精品咖啡（...</p>
-                <p class="recommend_bot_price">2件8.5折</p>
+            <div class="recommend_bot_item" v-if="index<3" v-for="(item, index) in popularItemList" :key="index">
+              <img class="itemImg" :src="item.listPicUrl" alt="">
+              <p class="recommend_bot_text">{{item.name}}（...</p>
+              <p class="recommend_bot_price">2件8.5折</p>
             </div>
         </div>
     </div>
@@ -45,7 +35,13 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import {mapState} from 'vuex'
   export default {
+    computed:{
+      ...mapState({
+        popularItemList:state=>state.home.homeData.popularItemList
+      })
+    }
   }
 </script>
 

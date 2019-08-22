@@ -1,58 +1,13 @@
 <template>
     <div class="shoopingWelfare">
-        <div class="WelfareItem">
-            <div class="WelfareItem_top">
-                <p class="WelfareItem_top_p1">9.9元超值专区首发</p>
-                <p class="WelfareItem_top_p2">180款商品新定价</p>
+        <div class="WelfareItem" v-for="(item, index) in ShoppingData" :key="index">
+            <div class="WelfareItem_top" >
+                <p class="WelfareItem_top_p1">{{item.styleItem.title}}</p>
+                <p class="WelfareItem_top_p2">{{item.styleItem.desc}}</p>
             </div>
-            <div class="WelfareItem_bot">
-                <div class="WelfareItem_bot_Img">
-                    <img src="./images/demo/food01.png">
-                </div>
-                <div class="WelfareItem_bot_Img">
-                    <img src="./images/demo/food02.png">
-                </div>
-            </div>
-        </div>
-        <div class="WelfareItem">
-            <div class="WelfareItem_top">
-                <p class="WelfareItem_top_p1">9.9元超值专区首发</p>
-                <p class="WelfareItem_top_p2">180款商品新定价</p>
-            </div>
-            <div class="WelfareItem_bot">
-                <div class="WelfareItem_bot_Img">
-                    <img src="./images/demo/food01.png">
-                </div>
-                <div class="WelfareItem_bot_Img">
-                    <img src="./images/demo/food02.png">
-                </div>
-            </div>
-        </div>
-        <div class="WelfareItem">
-            <div class="WelfareItem_top">
-                <p class="WelfareItem_top_p1">9.9元超值专区首发</p>
-                <p class="WelfareItem_top_p2">180款商品新定价</p>
-            </div>
-            <div class="WelfareItem_bot">
-                <div class="WelfareItem_bot_Img">
-                    <img src="./images/demo/food01.png">
-                </div>
-                <div class="WelfareItem_bot_Img">
-                    <img src="./images/demo/food02.png">
-                </div>
-            </div>
-        </div>
-        <div class="WelfareItem">
-            <div class="WelfareItem_top">
-                <p class="WelfareItem_top_p1">9.9元超值专区首发</p>
-                <p class="WelfareItem_top_p2">180款商品新定价</p>
-            </div>
-            <div class="WelfareItem_bot">
-                <div class="WelfareItem_bot_Img">
-                    <img src="./images/demo/food01.png">
-                </div>
-                <div class="WelfareItem_bot_Img">
-                    <img src="./images/demo/food02.png">
+            <div class="WelfareItem_bot" >
+                <div class="WelfareItem_bot_Img" v-for="(itemPicBean, index) in item.styleItem.itemPicBeanList" :key="index">
+                    <img :src="itemPicBean.picUrl">
                 </div>
             </div>
         </div>
@@ -61,8 +16,17 @@
 
 </template>
 
-<script type="text/ecmascript-6">
+<script type="text/ecmascript-6"> 
+  import { mapState } from 'vuex';
   export default {
+      props:{
+        ShoppingData:Array
+      },
+    //   computed:{
+    //       ...mapState({
+    //           ShoppingData:state=>state.home.homeData.sceneLightShoppingGuideModule
+    //       })
+    //   }
   }
 </script>
 

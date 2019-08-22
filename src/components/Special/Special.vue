@@ -11,20 +11,10 @@
         </div>
         <div class="bs" ref="bs">
           <div class="special_swiper">
-          <div class="swiperItem">
-              <img class="swiperItem_img" src="./images/demo/009.jpg" alt="">
-              <p class="swiperItem_p1">喝了这杯酸梅汤, 再也不想喝奶茶了</p>
-              <p class="swiperItem_p2">还原儿时好味道</p>
-          </div>
-          <div class="swiperItem">
-              <img class="swiperItem_img" src="./images/demo/009.jpg" alt="">
-              <p class="swiperItem_p1">喝了这杯酸梅汤, 再也不想喝奶茶了</p>
-              <p class="swiperItem_p1">还原儿时好味道</p>
-          </div>
-          <div class="swiperItem">
-              <img class="swiperItem_img" src="./images/demo/009.jpg" alt="">
-              <p class="swiperItem_p1">喝了这杯酸梅汤, 再也不想喝奶茶了</p>
-              <p class="swiperItem_p1">还原儿时好味道</p>
+          <div class="swiperItem" v-for="(item, index) in topicList" :key="index">
+              <img class="swiperItem_img" :src="item.itemPicUrl" alt="">
+              <p class="swiperItem_p1">{{item.title}}</p>
+              <p class="swiperItem_p2">{{item.subtitle}}</p>
           </div>
         </div>
         </div>  
@@ -35,7 +25,13 @@
 
 <script type="text/ecmascript-6">
   import BScroll from 'better-scroll'
+  import { mapState } from 'vuex'
   export default {
+    computed:{
+      ...mapState({
+        topicList:state=>state.home.homeData.topicList
+      })
+    },
     mounted(){
       new BScroll(this.$refs.bs,{
         scrollX: true,

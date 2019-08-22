@@ -19,13 +19,14 @@
         <router-view></router-view>
         <form v-if="isClick" class="phoneForm" action="">
             <div class="fromInput fromDiv">
-                <input type="text" placeholder="请输入手机号">
-
+                <input type="text" placeholder="请输入手机号" v-model="phone" name='phone' v-validate="'required|mobile'">
             </div>
+            <span style="color: red;" v-show="errors.has('phone')">{{ errors.first('phone') }}</span>
             <div class="fromInput fromDiv message">
-                <input type="text" placeholder="请输入短信验证码">
-                <span class="huoqu">获取验证码</span>
+                <input type="text" placeholder="请输入短信验证码" v-model="code" name="code" v-validate="{required:true,regex: /^\d{6}$/}">
+                <span class="huoqu" @click="getPhoneCode">{{timeIndex>0?`消息已发送(${timeIndex}s)`:'获取验证码'}}</span>
             </div>
+             <span style="color: red;" v-show="errors.has('code')">{{ errors.first('code') }}</span>
             <div class="from03 fromDiv">
                 <span class="yuwen">遇到问题?</span>
                 <span class="psddeng">使用密码验证登录</span>
@@ -39,7 +40,7 @@
                 </span>
                 <p>同意<span>《服务条款》</span>和<span>《网易隐私政策》</span></p>
             </div>
-            <div class="from06 fromDiv">
+            <div class="from06 fromDiv" @click="$router.replace('/personage')">
                 <span>其他登录方式</span>
                 <i class="iconfont icon-youjiantou"></i>
             </div>
@@ -47,11 +48,14 @@
 
         <form v-else class="eamilForm" action="">
             <div class="fromInput fromDiv">
-                <input type="text" placeholder="邮箱账号">
+                <input type="text" placeholder="邮箱账号" v-model="email" name='email' v-validate="'required|email'" >
             </div>
+            <span style="color: red;" v-show="errors.has('email')">{{ errors.first('email') }}</span>
             <div class="fromInput fromDiv message">
-                <input type="text" placeholder="密码">
+                <input type="text" placeholder="密码" v-model="pwd" name='pwd' v-validate="'required'">
             </div>
+            <span style="color: red;" v-show="errors.has('pwd')">{{ errors.first('pwd') }}</span>
+            
             <div class="from03 fromDiv">
                 <span class="yuwen" @click="$router.replace('/register')">注册账号</span>
                 <span class="psddeng">忘记密码</span>
@@ -59,7 +63,7 @@
             <div class="from04 fromDiv">
                 登录
             </div>
-            <div class="from06 fromDiv">
+            <div class="from06 fromDiv" @click="$router.replace('/personage')">
                 <span>其他登录方式</span>
                 <i class="iconfont icon-youjiantou"></i>
             </div>
@@ -69,10 +73,28 @@
 
 <script type="text/ecmascript-6">
   import {mapState} from 'vuex'
+import { setInterval, clearTimeout } from 'timers';
   export default {
     data(){
       return{
+        phone : '',     //手机号
+        code: '',  //手机验证码
+        timeIndex : 0, //获验证码的倒计时时间
+        email:'' , //邮箱
+        pwd: '', //密码
         isClick: this.$route.query.isClick
+      }
+    },
+    methods:{
+      getPhoneCode(){
+        this.timeIndex = 10;
+        this.timeId =  setInterval(()=>{
+          if(this.timeIndex===0){
+            clearTimeout(this.timeId)
+          }else{
+            this.timeIndex--
+          }
+        },1000)
       }
     }
   }
@@ -89,6 +111,7 @@ body
       padding 10px
       box-sizing border-box
       display flex
+
       .header_text
         width 20%
         height 30px
@@ -145,6 +168,7 @@ body
           position absolute
           right 5px
           bottom 6px
+          font-size 14px
       .from03
         width 100%
         height 40px

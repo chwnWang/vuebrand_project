@@ -10,32 +10,20 @@
             </div>
         </div>
         <div class="crowdfunding_list">
-            <div class="crowdfunding_list_item">
+            <div class="crowdfunding_list_item" v-for="(item, index) in zhongChouList" :key="index">
                 <div class="crowdfunding_l">
-                    <img src="./images/demo/007.png"/>
+                    <img :src="item.picUrl"/>
                 </div>
                 <div class="crowdfunding_r">
-
-                    <p class="crowdfunding_r_p1">一把七亿岁的</p>
-
-                    <p class="crowdfunding_r_p2">¥1999<span>起</span></p>
-                    <p class="crowdfunding_r_p3"><span class="span01" ></span><span class="span02">53%</span></p>
-                    <p class="crowdfunding_r_p4">1533人已支持</p>
-
-                </div>
-            </div>
-            <div class="crowdfunding_list_item">
-                <div class="crowdfunding_l">
-                    <img src="./images/demo/007.png"/>
-                </div>
-                <div class="crowdfunding_r">
-
-                    <p class="crowdfunding_r_p1">一把七亿岁的</p>
-
-                    <p class="crowdfunding_r_p2">¥1999<span>起</span></p>
-                    <p class="crowdfunding_r_p3"><span class="span01" ></span><span class="span02">53%</span></p>
-                    <p class="crowdfunding_r_p4">1533人已支持</p>
-
+                    <p class="crowdfunding_r_p1">{{item.name}}</p>
+                    <p class="crowdfunding_r_p2">{{item.showRetailPrice}}<span></span></p>
+                    <div class="crowdfunding_r_p3">
+                      <p class="span01" >
+                        <span class="span01_bg" :style="{width: item.progress/10 + '%'}"></span>
+                      </p>
+                      <span class="span02">{{item.progress/10}}%</span>
+                    </div>
+                    <p class="crowdfunding_r_p4">{{item.supportNum}}</p>
                 </div>
             </div>
         </div>
@@ -46,7 +34,13 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import { mapState } from 'vuex';
   export default {
+    computed:{
+      ...mapState({
+        zhongChouList:state=>state.home.homeData.zhongChouList
+      })
+    }
   }
 </script>
 
@@ -101,9 +95,14 @@
               margin-bottom 10px
               .span01
                  width 80%
-                 height 1px
+                 height 2px
                  background-color #ededed
-                 vertical-align: middle;
+                 vertical-align middle
+                 .span01_bg
+                   width 0%
+                   height 100%
+                   display block
+                   background-color #FEA438
               .span02
                  font-size 14px
                  vertical-align: middle;

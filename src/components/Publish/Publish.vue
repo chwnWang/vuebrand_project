@@ -2,27 +2,19 @@
     <div class="DesenoTime">
         <div class="DesenoTime_top">
             <h1 class="DesenoTime_top_h1">
-                限时购
+                新品首发
             </h1>
-            <div class="DesenoTime_top_time">
-                <span class="hours time">03</span>
-                <span class="maohao">:</span>
-                <span class="minute time">02</span>
-                <span class="maohao">:</span>
-                <span class="second time">10</span>
-
-            </div>
             <div class="DesenoTime_top_right">
                 <span>更多</span>
                 <i class="iconfont icon-youjiantou"></i>
             </div>
         </div>
-        <div class="DesenoTime_bot" v-if="flashSaleModule">
-            <div class="DesenoTime_bot_item" v-for="(item, index) in flashSaleModule.itemList" :key="index">
-                <img class="itemImg" :src="item.picUrl" alt="">
+        <div class="DesenoTime_bot" v-if="newItemList">
+            <div class="DesenoTime_bot_item" v-for="(item, index) in newItemList" :key="index" v-if="index<6">
+                <img class="itemImg" :src="item.primaryPicUrl" alt="">
                 <p class="DesenoTime_bot_price">
-                    <span class="span_p1">¥{{item.activityPrice}}</span>
-                    <span class="span_p2"><s>¥{{item.originPrice}}</s></span>
+                    <span class="span_p1">{{item.name}}...<span class="span_p2">¥{{item.counterPrice}}</span></span>
+                    
                 </p>
             </div>  
         </div>
@@ -34,7 +26,7 @@
   import {mapState} from 'vuex'
   export default {
     props:{
-      flashSaleModule:Object
+      newItemList:Array
     },
   }
 </script>
@@ -58,15 +50,12 @@
            span
              font-size 18px
            .time
-              margin-left 10px
-              color #fff
-              width 20px
-              height 20px
-              background-color black
-              border-radius 3px
-              font-size 15px
-              padding 2px
-              box-sizing border-box
+             margin-left 10px
+             color #fff
+             width 20px
+             height 20px
+             background-color black
+             border-radius 3px
            .maohao
              margin-left 10px
         .DesenoTime_top_right
@@ -90,15 +79,11 @@
             margin-bottom: 10px
           .DesenoTime_bot_price
             display flex
-            font-size 12px
-            align-items center
-            justify-content center
-            .span_p1
-              color #B4282D
-              text-align center
+            flex-wrap wrap
+            font-size 12px 
             .span_p2
               margin-left 5px
-              color #989898
+              color #B4282D
 
 
     

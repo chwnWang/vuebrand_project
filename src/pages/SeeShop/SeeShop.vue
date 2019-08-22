@@ -40,7 +40,7 @@
       conversion(){
         this.isShow =!this.isShow
       }
-    }
+    },
   }
 </script>
 

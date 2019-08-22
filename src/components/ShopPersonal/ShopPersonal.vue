@@ -2,33 +2,11 @@
    <div class="shopPersonal">
     <h1 class="shopPersonal_name">私人订制</h1>
     <div class="swiper-container" id="personalSwiper">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <div class="slideItem">
-                    <img src="./images/demo/yifu01.png"/>
-                    <p>男士1服装<span class="shopPrice">¥99.9</span></p>
-                </div>
-                <div class="slideItem">
-                    <img src="./images/demo/yifu01.png"/>
-                    <p>男士1服装<span class="shopPrice">¥99.9</span></p>
-                </div>
-                <div class="slideItem">
-                    <img src="./images/demo/yifu01.png"/>
-                    <p>男士1服装<span class="shopPrice">¥99.9</span></p>
-                </div>
-            </div>
-            <div class="swiper-slide">
-                <div class="slideItem">
-                    <img src="./images/demo/yifu01.png"/>
-                    <p>男士2服装<span class="shopPrice">¥99.9</span></p>
-                </div>
-                <div class="slideItem">
-                    <img src="./images/demo/yifu01.png"/>
-                    <p>男士2服装<span class="shopPrice">¥99.9</span></p>
-                </div>
-                <div class="slideItem">
-                    <img src="./images/demo/yifu01.png"/>
-                    <p>男士2服装<span class="shopPrice">¥99.9</span></p>
+        <div class="swiper-wrapper" v-if="homeData">
+            <div class="swiper-slide" v-for="(item, index) in personalArr" :key="index">
+                <div class="slideItem" v-for="personal in item" :key="personal.id">
+                    <img :src="personal.listPicUrl"/>
+                    <p>{{personal.name}}<span class="shopPrice">¥{{personal.retailPrice}}</span></p>
                 </div>
             </div>
 
@@ -43,9 +21,29 @@
 
 <script type="text/ecmascript-6">
   import Swiper from 'swiper'
+  import chunk from 'lodash/chunk'
   import '../../../static/css/swiper.min.css'
+  import { mapState } from 'vuex';
+  
   export default {
-    mounted(){
+    // props:{
+    //   personalShop:Array
+    // },
+    computed:{
+      ...mapState({
+        homeData:state=>state.home.homeData
+      }),
+      personalArr() {
+        let arr = [];
+        if(this.homeData.personalShop){
+          return  chunk(this.homeData.personalShop,3);
+        }
+        return arr
+      }
+    },
+  
+    async mounted(){
+      await this.$store.dispatch('getHomeData');
       new Swiper('#personalSwiper', {
           loop:true,
           spaceBetween: 30,
@@ -59,7 +57,8 @@
               clickable: true,
           },
       });
-    }
+    },
+
   }
 </script>
 
@@ -103,11 +102,11 @@
         .swiper-pagination
           height 5px
           .swiper-pagination-bullet
-            width 5px
-            height 5px
+            width 10px
+            height 10px
           /deep/ .swiper-pagination-bullet-active
-            width 5px
-            height 5px
+            width 10px
+            height 10px
             background red
     
  

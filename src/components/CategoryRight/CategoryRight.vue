@@ -1,51 +1,19 @@
 <template>
   <div class="cat_conent" ref="rightList">
         <!--右侧02-->
-        <div class="category_right" style="display: none;" v-if="!isShow" >
+        <div class="category_right" v-if="categoryData[currIndex]" >
             <div class="right_top">
-                <img src="./images/cat/c01.jpg"/>
+                <img :src="categoryData[currIndex].wapBannerUrl"/>
             </div>
-            <div class="right_List">
-                <div class="right_List_item">
-                  <img class="itemImg" src="./images/cat/c02.png">
-                    <p class="itemText">50元幸福好物</p>
-                </div>
-                <div class="right_List_item">
-                    <img class="itemImg" src="./images/cat/c02.png">
-                    <p class="itemText">50元幸福好物福好物</p>
-                </div>
-                <div class="right_List_item">
-                    <img class="itemImg" src="./images/cat/c02.png">
-                    <p class="itemText">50元幸福好物</p>
-                </div>
-                <div class="right_List_item">
-                    <img class="itemImg" src="./images/cat/c02.png">
-                    <p class="itemText">50元幸福好物</p>
-                </div>
-                <div class="right_List_item">
-                    <img class="itemImg" src="./images/cat/c02.png">
-                    <p class="itemText">50元幸福好物</p>
-                </div>
-                <div class="right_List_item">
-                    <img class="itemImg" src="./images/cat/c02.png">
-                    <p class="itemText">50元幸福好物</p>
-                </div>
-                <div class="right_List_item">
-                    <img class="itemImg" src="./images/cat/c02.png">
-                    <p class="itemText">50元幸福好物</p>
-                </div>
-                <div class="right_List_item">
-                    <img class="itemImg" src="./images/cat/c02.png">
-                    <p class="itemText">50元幸福好物</p>
-                </div>
-                <div class="right_List_item">
-                    <img class="itemImg" src="./images/cat/c02.png">
-                    <p class="itemText">50元幸福好物</p>
+            <div class="right_List" >
+                <div class="right_List_item" v-for="(subCate, index) in categoryData[currIndex].subCateList" :key="index">
+                  <img class="itemImg" :src="subCate.wapBannerUrl">
+                    <p class="itemText">{{subCate.name}}</p>
                 </div>
             </div>
         </div>
         <!--右侧02-->
-        <div class="category_right"  style="display: block;">
+        <div class="category_right" v-else>
             <div class="right_top">
                 <img src="./images/cat/c03.jpg"/>
             </div>
@@ -126,25 +94,37 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import {mapState} from 'vuex'
   import BScroll from 'better-scroll'
   export default {
+    props:{
+        categoryData:Array
+    },
     data () {
         return{
             isShow : true //初始化显示
         }
     },
-    mounted(){
-        this.$nextTick(()=>{
-            new BScroll(this.$refs.rightList,{
-                scrollX: false,
-                scrollY: true,
-                click: true
-            })
+    computed:{
+        ...mapState({
+            currIndex:state=>state.category.currIndex
         })
-          
-        
-        
-    }    
+    },
+    watch: {
+      categoryData: {
+        deep: true,
+        handler () {
+            console.log(this)
+          this.$nextTick(()=>{
+            if(this.cScroll){
+              this.cScroll.refresh()
+            }else{
+              this.cScroll = new BScroll(this.$refs.rightList, {click: true,scrollY: true})
+            }
+          })
+        }
+      }
+    },   
   }
 </script>
 

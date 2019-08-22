@@ -14,94 +14,27 @@
       </div>
     </Header>
     <!--头部导航-->
-    <HeaderNav/>
+    <HeaderNav :kingKongModule="homeData.kingKongModule"/>
     <!--轮播-->
     <HomeSwiper/>
-    <!--商品分类01-->
+    <!--商品分类01000-->
     <ul class="home_shop_explain ">
-      <li class="shopTopItem">
+      <li class="shopTopItem" v-for="(policyDesc, index) in homeData.policyDescList" :key="index">
           <span class="ItemImg">
-              <img src="./images/demo/003.png"/>
+              <img :src="policyDesc.icon"/>
           </span>
-          <span class="ItemText">网易自营品牌</span>
-      </li>
-      <li class="shopTopItem">
-          <span class="ItemImg">
-              <img src="./images/demo/002.png"/>
-          </span>
-          <span class="ItemText">30天无忧退货</span>
-      </li>
-      <li class="shopTopItem">
-          <span class="ItemImg">
-              <img src="./images/demo/001.png"/>
-          </span>
-          <span class="ItemText">48小时快速退款</span>
+          <span class="ItemText">{{policyDesc.desc}}</span>
       </li>
     </ul>
     <!--商品分类01-->
     <div class="home_shopcty">
-      <ul class="home_shop_list">
-        <li class="categoryItem">
+      <ul class="home_shop_list" v-if="homeData.kingKongModule">
+        <li class="categoryItem" v-for="(item, index) in homeData.kingKongModule.kingKongList" :key="index">
             <span class="categoryImg">
-                <img src="./images/demo/01.gif"/>
+                <img :src="item.picUrl"/>
             </span>
-            <span class="categoryText">新品首发</span>
+            <span class="categoryText">{{item.text}}</span>
         </li>
-        <li class="categoryItem">
-              <span class="categoryImg">
-                <img src="./images/demo/02.gif"/>
-              </span>
-              <span class="categoryText">居家生活</span>
-        </li>
-        <li class="categoryItem">
-              <span class="categoryImg">
-                <img src="./images/demo/01.gif"/>
-            </span>
-            <span class="categoryText">服饰鞋包</span>
-        </li>
-        <li class="categoryItem">
-            <span class="categoryImg">
-                <img src="./images/demo/02.gif"/>
-            </span>
-            <span class="categoryText">美食酒水</span>
-        </li>
-        <li class="categoryItem">
-              <span class="categoryImg">
-                <img src="./images/demo/01.gif"/>
-            </span>
-            <span class="categoryText">个护清洁</span>
-        </li>
-        <li class="categoryItem">
-              <span class="categoryImg">
-                <img src="./images/demo/02.gif"/>
-            </span>
-            <span class="categoryText">母婴亲子</span>
-        </li>
-        <li class="categoryItem">
-              <span class="categoryImg">
-                <img src="./images/demo/01.gif"/>
-            </span>
-            <span class="categoryText">运动旅行</span>
-        </li>
-        <li class="categoryItem">
-              <span class="categoryImg">
-                <img src="./images/demo/02.gif"/>
-            </span>
-            <span class="categoryText">数码家电脑</span>
-        </li>
-        <li class="categoryItem">
-              <span class="categoryImg">
-                <img src="./images/demo/01.gif"/>
-            </span>
-            <span class="categoryText">全球特色</span>
-        </li>
-        <li class="categoryItem">
-            <span class="categoryImg">
-                <img src="./images/demo/02.gif"/>
-            </span>
-            <span class="categoryText">超级会员</span>
-        </li >
-
 
       </ul>
     </div>
@@ -109,19 +42,21 @@
     <div class="yuangong">
         <img src="./images/demo/wnagyiyuangong.gif"/>
     </div>
-    <!--商品4格布局-->
-    <ShoopingWelfare/>
-    <!--私人订制-->
-    <ShopPersonal/>
-    <!--限时购-->
-    <DesenoTime/>
+    <!--商品4格布局222-->
+    <ShoopingWelfare :ShoppingData="homeData.sceneLightShoppingGuideModule"/>
+    <!--私人订制222-->
+    <ShopPersonal :personalShop="homeData.personalShop"/>
+    <!--限时购222-->
+    <DesenoTime :flashSaleModule="homeData.flashSaleModule"/>
+    <!--新品首发222-->
+    <ShopPublish :newItemList="homeData.newItemList"/>
     <!--人气推荐-->
     <Recommend/>
     <!--类目热销榜-->
     <HoeSell/>
-    <!--专题精选-->
+    <!--专题精选222-->
     <Special/>
-    <!--众筹-->
+    <!--众筹22-->
     <Crowdfunding/>
     <!--底部-->
     <HomeFooter/>
@@ -141,12 +76,26 @@
   import ShoopingWelfare from '../../components/ShoopingWelfare/ShoopingWelfare'
   import ShopPersonal from '../../components/ShopPersonal/ShopPersonal'
   import DesenoTime from '../../components/DesenoTime/DesenoTime'
+  import ShopPublish from '../../components/Publish/Publish'
   import Recommend from '../../components/Recommend/Recommend'
   import HoeSell from '../../components/HoeSell/HoeSell'
   import Special from '../../components/Special/Special'
   import Crowdfunding from '../../components/Crowdfunding/Crowdfunding'
   import HomeFooter from '../../components/HomeFooter/HomeFooter'
+
+  import {mapState} from 'vuex'
   export default {
+
+    computed:{
+      ...mapState({
+        homeData: state => state.home.homeData
+      })
+    },
+
+    async mounted(){
+      await this.$store.dispatch('getHomeData')
+    },
+
     components:{
       Header,
       HeaderNav,
@@ -154,6 +103,7 @@
       ShoopingWelfare,
       ShopPersonal,
       DesenoTime,
+      ShopPublish,
       Recommend,
       HoeSell,
       Special,

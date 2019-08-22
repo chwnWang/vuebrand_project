@@ -2,24 +2,16 @@
   <div id="category">
     <!--头部-->
     <div class="header">
-        <span class="header_text">
-
-        </span>
         <div class="header_mid" @click="$router.push('/search')">
             <i class="iconfont icon-sousuo"></i>
             <input class="header_input" type="text" placeholder="搜索商品,共2015款好物"/>
         </div>
-        <div class="header_right">
-
-        </div>
-
-
     </div>
     <div class="category_content">
         <!--左侧-->
-        <CategoryLeft/>
+        <CategoryLeft :categoryData="categoryData"/>
         <!--右侧-->
-        <CategoryRight/>
+        <CategoryRight :categoryData="categoryData" />
 
     </div>
   </div>
@@ -28,7 +20,16 @@
 <script type="text/ecmascript-6">
   import CategoryLeft from '../../components/CategoryLeft/CategoryLeft'
   import CategoryRight from '../../components/CategoryRight/CategoryRight'
+  import {mapState} from 'vuex'
   export default {
+    computed:{
+      ...mapState({
+        categoryData:state=>state.category.categorys
+      })
+    },
+    mounted(){
+      this.$store.dispatch('getCategoryData');
+    },
     components:{
       CategoryLeft,
       CategoryRight
@@ -37,21 +38,18 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-  @import '../../../static/css/mixins.styl' 
+@import '../../../static/css/mixins.styl'
   #category
+    zoom 1
     .header
       width 100%
       height 45px
       background-color #fff
       padding 10px
       box-sizing border-box
-      .header_text
-        height 30px
-        float left
-        background-color #EDEDED
       .header_mid
         float left
-        width: 59%;
+        width 95%
         height 30px
         display flex
         background-color #EDEDED
@@ -67,11 +65,6 @@
           font-size 14px
           height 100%
           background-color #EDEDED
-      .header_right
-        padding-top 5px
-        background-color #EDEDED
-
-
     .category_content
       width 100%
       display flex
